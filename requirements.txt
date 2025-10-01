@@ -2,3 +2,4 @@ pandas
 streamlit
 plotly
 openpyxl
+streamlit-aggrid  # Add this for advanced interactive tables if desired
