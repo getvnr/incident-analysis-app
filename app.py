@@ -45,6 +45,7 @@ if uploaded_file:
     
     # Create pivot table
     pivot = pd.pivot_table(df, index='Month', columns='Incident Type', aggfunc='size', fill_value=0)
+    pivot.loc['Total'] = pivot.sum()  # Add total row
     
     # Download pivot table as Excel
     def to_excel(df):
@@ -67,14 +68,14 @@ if uploaded_file:
     
     # Interactive selection for filtering incidents
     st.subheader('Filter Incidents by Month and Type')
-    selected_month = st.selectbox('Select Month', sorted(pivot.index))
+    selected_month = st.selectbox('Select Month', sorted(pivot.index[:-1]))  # Exclude 'Total'
     selected_type = st.selectbox('Select Incident Type', sorted(pivot.columns))
     
     # Filter incidents based on selection
     if selected_month and selected_type:
         filtered_df = df[(df['Month'] == selected_month) & (df['Incident Type'] == selected_type)]
         st.write(f"Showing {len(filtered_df)} incidents for {selected_type} in {selected_month}")
-        st.dataframe(filtered_df[['Number', 'Opened', 'Short description', 'Assigned to', 'State']])
+        st.dataframe(filtered_df)  # Show all details
         
         # Download filtered incidents as Excel
         filtered_excel = to_excel(filtered_df)
