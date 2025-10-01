@@ -1,5 +1,4 @@
-pandas
 streamlit
-plotly
+pandas
 openpyxl
-streamlit-aggrid  # Add this for advanced interactive tables if desired
+plotly
